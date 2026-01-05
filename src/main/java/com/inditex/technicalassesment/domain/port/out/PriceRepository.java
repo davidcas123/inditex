@@ -3,8 +3,8 @@ package com.inditex.technicalassesment.domain.port.out;
 import com.inditex.technicalassesment.domain.model.Price;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
+import java.util.List;
 
 public interface PriceRepository {
-    Optional<Price> getByProductAndChainOnDate(LocalDateTime applicationDate, Long productId, Long brandId);
+    List<Price> findApplicablePrices(LocalDateTime applicationDate, Long productId, Long brandId);
 }

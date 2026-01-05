@@ -1,9 +1,12 @@
 package com.inditex.technicalassesment.domain.model;
 
 import com.inditex.technicalassesment.domain.exception.InvalidPriceException;
+import com.inditex.technicalassesment.domain.exception.PriceNotFoundException;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Comparator;
+import java.util.List;
 
 public record Price(
         Long brandId,
@@ -84,5 +87,22 @@ public record Price(
             throw new InvalidPriceException(message);
         }
     }
+
+    public boolean isApplicableAt(LocalDateTime applicationDate) {
+        if (applicationDate == null) {
+            return false;
+        }
+        return !applicationDate.isBefore(startDate) && !applicationDate.isAfter(endDate);
+    }
+
+    public static Price selectHighestPriority(List<Price> prices, LocalDateTime date) {
+        return prices.stream()
+                .filter(price -> price.isApplicableAt(date))
+                .max(Comparator.comparing(Price::priority))
+                .orElseThrow(() -> new PriceNotFoundException(
+                        "No applicable price found for the given date: " + date
+                ));
+    }
+
 
 }
