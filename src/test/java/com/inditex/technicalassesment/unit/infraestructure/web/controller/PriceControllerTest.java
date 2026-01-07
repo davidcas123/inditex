@@ -4,6 +4,7 @@ import com.inditex.technicalassesment.application.dto.response.PriceResponse;
 import com.inditex.technicalassesment.application.port.in.FindApplicablePriceUseCase;
 import com.inditex.technicalassesment.domain.exception.PriceNotFoundException;
 import com.inditex.technicalassesment.infrastructure.in.web.controller.PriceController;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,7 @@ class PriceControllerTest {
     private FindApplicablePriceUseCase findApplicablePriceUseCase;
 
     @Test
+    @DisplayName("Should return price when request is valid")
     void shouldReturnPriceWhenValidRequest() throws Exception {
 
         PriceResponse response = PriceResponse.builder()
@@ -58,6 +60,7 @@ class PriceControllerTest {
     }
 
     @Test
+    @DisplayName("Should return 404 when price is not found")
     void shouldReturn404WhenPriceNotFound() throws Exception {
 
         when(findApplicablePriceUseCase.execute(any()))
@@ -73,6 +76,7 @@ class PriceControllerTest {
     }
 
     @Test
+    @DisplayName("Should return 400 when required parameter is missing")
     void shouldReturn400WhenMissingRequiredParameter() throws Exception {
 
         mockMvc.perform(get("/api/v1/prices/applicable")
@@ -82,6 +86,7 @@ class PriceControllerTest {
     }
 
     @Test
+    @DisplayName("Should return 400 when date format is invalid")
     void shouldReturn400WhenInvalidDateFormat() throws Exception {
 
         mockMvc.perform(get("/api/v1/prices/applicable")

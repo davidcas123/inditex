@@ -5,6 +5,7 @@ import com.inditex.technicalassesment.domain.model.Price;
 import com.inditex.technicalassesment.infrastructure.out.persistence.entity.BrandEntity;
 import com.inditex.technicalassesment.infrastructure.out.persistence.entity.PriceEntity;
 import com.inditex.technicalassesment.infrastructure.out.persistence.mapper.PriceMapper;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -12,10 +13,10 @@ import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
 class PriceMapperTest {
 
     @Test
+    @DisplayName("Should map PriceEntity to Price domain model")
     void shouldMapEntityToDomain() {
 
         BrandEntity brandEntity = BrandEntity.builder()
@@ -49,6 +50,7 @@ class PriceMapperTest {
     }
 
     @Test
+    @DisplayName("Should map Price domain model to PriceEntity")
     void shouldMapDomainToEntity() {
 
         Price price = new Price(
@@ -75,6 +77,7 @@ class PriceMapperTest {
     }
 
     @Test
+    @DisplayName("Should return null when entity is null")
     void shouldReturnNullWhenEntityIsNull() {
 
         Price price = PriceMapper.toDomain(null);
@@ -82,6 +85,7 @@ class PriceMapperTest {
     }
 
     @Test
+    @DisplayName("Should return null when domain model is null")
     void shouldReturnNullWhenDomainIsNull() {
 
         PriceEntity entity = PriceMapper.toEntity(null);
