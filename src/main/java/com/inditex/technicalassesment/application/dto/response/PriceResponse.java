@@ -12,7 +12,8 @@ public record PriceResponse(
         Integer priceList,
         LocalDateTime startDate,
         LocalDateTime endDate,
-        BigDecimal price
+        BigDecimal price,
+        String currency
 ) {
     public static PriceResponse from(Price price) {
         return PriceResponse.builder()
@@ -22,6 +23,7 @@ public record PriceResponse(
                 .startDate(price.startDate())
                 .endDate(price.endDate())
                 .price(price.price())
+                .currency(price.currency().getCode())
                 .build();
     }
 }
